@@ -1,0 +1,36 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  BIN_NAME: kubectl-clean-get
+
+tasks:
+  test:
+    desc: "Run the tests"
+    cmds:
+      - go test ./cmd -coverprofile=covetage.out
+
+  build.win:
+    desc: "Build for windows platform"
+    cmds:
+      - go build -o {{ .BIN_NAME }}.exe
+    env:
+      GOOS: windows
+      GOARCH: amd64
+
+  build.mac:
+    desc: "Build for macos platform"
+    cmds:
+      - go build -o {{ .BIN_NAME }}
+    env:
+      GOOS: darwin
+      GOARCH: amd64
+
+  build:
+    desc: "Build for linux platform"
+    cmds:
+      - go build -o {{ .BIN_NAME }}
+    env:
+      GOOS: linux
+      GOARCH: amd64
